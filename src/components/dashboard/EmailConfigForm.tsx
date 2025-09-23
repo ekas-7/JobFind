@@ -14,7 +14,11 @@ import {
   AlertCircle,
   Settings,
   Sparkles,
-  Copy
+  Copy,
+  Shield,
+  Key,
+  ExternalLink,
+  Info
 } from 'lucide-react';
 
 interface EmailConfigFormProps {
@@ -183,17 +187,78 @@ Warm regards,
       <Card className="border-blue-200 bg-blue-50">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-blue-900 flex items-center">
-            <Settings className="w-5 h-5 mr-2" />
-            Gmail Setup Required
+            <Shield className="w-5 h-5 mr-2" />
+            Gmail App Password Setup Guide
           </CardTitle>
+          <CardDescription className="text-blue-700">
+            Follow these steps to securely connect your Gmail account
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ol className="text-sm text-blue-800 list-decimal list-inside space-y-2">
-            <li>Enable 2-factor authentication on your Google account</li>
-            <li>Go to Google Account → Security → App passwords</li>
-            <li>Generate an App Password for &quot;Mail&quot;</li>
-            <li>Use your Gmail address and the 16-digit App Password below</li>
-          </ol>
+        <CardContent className="space-y-4">
+          <div className="space-y-4">
+            <div className="bg-white p-4 rounded-lg border border-blue-200">
+              <h4 className="font-semibold text-blue-900 mb-2 flex items-center">
+                <Shield className="w-4 h-4 mr-2" />
+                Step 1: Enable 2-Step Verification
+              </h4>
+              <ol className="text-sm text-blue-800 space-y-1 ml-6">
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">1</span>
+                  <span>Go to <a href="https://myaccount.google.com/security" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600 inline-flex items-center">
+                    Google Account Security <ExternalLink className="w-3 h-3 ml-1" />
+                  </a></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">2</span>
+                  <span>Under "Signing in to Google", click <strong>2-Step Verification</strong> and enable it</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">3</span>
+                  <span>Follow the setup steps (phone number, authenticator app, etc.)</span>
+                </li>
+              </ol>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg border border-blue-200">
+              <h4 className="font-semibold text-blue-900 mb-2 flex items-center">
+                <Key className="w-4 h-4 mr-2" />
+                Step 2: Create App Password
+              </h4>
+              <ol className="text-sm text-blue-800 space-y-1 ml-6">
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">1</span>
+                  <span>Go back to <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600 inline-flex items-center">
+                    App Passwords <ExternalLink className="w-3 h-3 ml-1" />
+                  </a></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">2</span>
+                  <span>Under "Select app", choose <strong>Mail</strong></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">3</span>
+                  <span>Under "Select device", choose <strong>Other (Custom name)</strong> and type "NodeMailerApp"</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">4</span>
+                  <span>Click <strong>Generate</strong></span>
+                </li>
+                <li className="flex items-start">
+                  <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">5</span>
+                  <span>Copy the 16-character password and use it in the "App Password" field below</span>
+                </li>
+              </ol>
+            </div>
+
+            <div className="bg-amber-50 p-3 rounded-lg border border-amber-200">
+              <div className="flex items-start space-x-2">
+                <Info className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-amber-800">
+                  <strong>Important:</strong> Use your regular Gmail email address and the 16-digit App Password (not your regular password) in the form below.
+                </div>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
