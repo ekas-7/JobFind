@@ -46,14 +46,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate resume file
-    if (!resumeFile.name.match(/\.txt$/)) {
+    if (!resumeFile.name.match(/\.(txt|pdf)$/)) {
       return NextResponse.json<EmailResponse>(
         { 
           success: false, 
           message: 'Invalid resume file type', 
           sent: 0, 
           failed: 0,
-          errors: ['Resume must be a .txt file']
+          errors: ['Resume must be a .txt or .pdf file']
         },
         { status: 400 }
       );

@@ -39,7 +39,7 @@ export class GmailService {
         attachments: resume ? [{
           filename: resumeFilename || 'resume.txt',
           content: resume,
-          contentType: 'text/plain'
+          contentType: resumeFilename?.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'text/plain'
         }] : undefined,
       };
 
