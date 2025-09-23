@@ -62,6 +62,38 @@ Before setting up the application, ensure you have:
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    ```
 
+## Deploying to Vercel
+
+1. **Fork or clone this repository**
+
+2. **Connect to Vercel**
+   - Go to [Vercel](https://vercel.com)
+   - Click "Add New..." → "Project"
+   - Import your GitHub repository
+   - Configure project settings:
+     - Framework Preset: Next.js
+     - Root Directory: ./
+     - Build Command: `npm run build`
+     - Output Directory: `.next`
+
+3. **Configure Environment Variables**
+   
+   Add these environment variables in your Vercel project settings:
+
+   ```
+   GMAIL_USER=your-gmail@gmail.com
+   GMAIL_APP_PASSWORD=your-app-password
+   NEXT_PUBLIC_APP_URL=your-deployment-url.vercel.app
+   ```
+
+4. **Deploy**
+   - Click "Deploy"
+   - Wait for the build to complete
+
+5. **Verify Deployment**
+   - Visit your deployed application
+   - Test the email functionality
+
 ## Usage
 
 1. **Start the development server**:
@@ -85,9 +117,9 @@ Before setting up the application, ensure you have:
 - Maximum file size: 10MB
 - Example columns: `email`, `name`, `company`, `position`
 
-### Resume Files (.txt)
-- Plain text format for maximum email compatibility
-- Maximum file size: 1MB
+### Resume Files (.txt, .pdf)
+- Plain text (.txt) or PDF format for maximum email compatibility
+- Maximum file size: 3MB
 - Include: contact info, experience, skills, education
 
 ## Features in Detail
