@@ -33,44 +33,9 @@ export default function EmailConfigForm({ onSubmit, onBack }: EmailConfigFormPro
     subject: '',
     message: ''
   });
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [verificationResult, setVerificationResult] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
 
   const handleInputChange = (field: keyof EmailConfig, value: string) => {
     setConfig(prev => ({ ...prev, [field]: value }));
-    setVerificationResult(null);
-  };
-
-  const verifyGmailConnection = async () => {
-    setIsVerifying(true);
-    setVerificationResult(null);
-
-    try {
-      const response = await fetch('/api/verify-gmail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: config.email }),
-      });
-
-      const result = await response.json();
-
-      setVerificationResult({
-        success: result.success,
-        message: result.message
-      });
-    } catch {
-      setVerificationResult({
-        success: false,
-        message: 'Failed to verify Gmail connection'
-      });
-    } finally {
-      setIsVerifying(false);
-    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -82,6 +47,7 @@ export default function EmailConfigForm({ onSubmit, onBack }: EmailConfigFormPro
 
   const isFormValid = () => {
     return config.email.trim() !== '' &&
+           config.password.trim() !== '' &&
            config.subject.trim() !== '' &&
            config.message.trim() !== '';
   };  const emailTemplates = [
@@ -275,7 +241,7 @@ Warm regards,
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label htmlFor="from" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">
                 Gmail Address
               </label>
               <Input
@@ -287,33 +253,22 @@ Warm regards,
                 required
               />
             </div>
-
-            {config.email && (
-              <div className="flex items-center space-x-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={verifyGmailConnection}
-                  disabled={isVerifying}
-                >
-                  {isVerifying ? 'Verifying...' : 'Test Connection'}
-                </Button>
-                {verificationResult && (
-                  <div className="flex items-center space-x-2">
-                    {verificationResult.success ? (
-                      <CheckCircle className="w-5 h-5 text-green-500" />
-                    ) : (
-                      <AlertCircle className="w-5 h-5 text-red-500" />
-                    )}
-                    <span className={`text-sm ${
-                      verificationResult.success ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {verificationResult.message}
-                    </span>
-                  </div>
-                )}
-              </div>
-            )}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">
+                App Password
+              </label>
+              <Input
+                type="password"
+                id="password"
+                value={config.password}
+                onChange={(e) => handleInputChange('password', e.target.value)}
+                placeholder="16-digit App Password"
+                required
+              />
+               <p className="text-xs text-gray-500 mt-1">
+                This is the 16-digit password you generated, not your regular Gmail password.
+              </p>
+            </div>
           </CardContent>
         </Card>
 
