@@ -8,30 +8,61 @@ export class ExcelProcessor {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       
-      // Convert to JSON
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      // Convert to JSON array of arrays to handle any structure
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' }) as any[][];
       
       if (jsonData.length === 0) {
         throw new Error('Excel file is empty');
       }
 
-      // First row contains headers
-      const headers = jsonData[0] as string[];
+      let headers: string[] = [];
+      let dataRows: any[][] = [];
+
+      // Check if the first row looks like a header (no emails)
+      const firstRowHasEmail = jsonData[0].some(cell => typeof cell === 'string' && cell.includes('@'));
       
-      // Rest of the rows contain data
-      const data: EmailData[] = jsonData.slice(1).map((row: unknown) => {
-        const rowData: EmailData = { email: '' };
-        const rowArray = Array.isArray(row) ? row : [];
-        headers.forEach((header, index) => {
-          const cellValue = rowArray[index];
-          rowData[header] = cellValue ? String(cellValue) : '';
+      if (!firstRowHasEmail && jsonData.length > 0) {
+        headers = jsonData[0].map(h => String(h));
+        dataRows = jsonData.slice(1);
+      } else {
+        // No header or first row contains data, treat all rows as data
+        headers = ['Column 1', 'Column 2', 'Column 3']; // Generic headers
+        dataRows = jsonData;
+      }
+
+      const processedData: EmailData[] = [];
+      dataRows.forEach(row => {
+        const rowEmails: string[] = [];
+        row.forEach(cell => {
+          if (typeof cell === 'string') {
+            // Regex to find all email-like strings in a cell
+            const emailsInCell = cell.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
+            if (emailsInCell) {
+              rowEmails.push(...emailsInCell);
+            }
+          }
         });
-        return rowData;
+
+        if (rowEmails.length > 0) {
+          // Create a new record for each unique email found in the row
+          const uniqueEmails = [...new Set(rowEmails)];
+          uniqueEmails.forEach(email => {
+            const rowData: EmailData = { email: email.trim() };
+            headers.forEach((header, index) => {
+              rowData[header] = row[index] ? String(row[index]) : '';
+            });
+            processedData.push(rowData);
+          });
+        }
       });
 
+      if (processedData.length === 0) {
+        throw new Error('No valid email addresses found in the file');
+      }
+
       return {
-        headers: headers.filter(header => header && header.trim() !== ''),
-        data: data.filter(row => Object.values(row).some(value => value && value.toString().trim() !== ''))
+        headers: [...new Set(processedData.flatMap(Object.keys))].filter(h => h && h.trim() !== ''),
+        data: processedData
       };
     } catch (error) {
       console.error('Excel processing error:', error);
