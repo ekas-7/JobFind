@@ -111,7 +111,7 @@ export default function EmailSender({
         formData.append('senderPassword', emailConfig.password);
         formData.append('resume', resumeFile);
 
-        const response = await fetch('/api/send-email', {
+        const response = await fetch('/api/send-emails', {
           method: 'POST',
           body: formData,
         });
