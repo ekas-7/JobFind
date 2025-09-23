@@ -194,7 +194,7 @@ export default function EmailSender({
             </div>
           </div>
           <div className="text-center text-gray-600">
-            Please don't close this page while emails are being sent...
+            Please don&apos;t close this page while emails are being sent...
           </div>
         </div>
       )}

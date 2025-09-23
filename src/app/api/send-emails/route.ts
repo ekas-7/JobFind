@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     try {
       excelData = JSON.parse(excelDataString);
       emailConfig = JSON.parse(emailConfigString);
-    } catch (parseError) {
+    } catch {
       return NextResponse.json<EmailResponse>(
         { 
           success: false, 

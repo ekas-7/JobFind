@@ -31,7 +31,7 @@ export default function ResumeUploader({ onSuccess, onBack }: ResumeUploaderProp
     try {
       const text = await selectedFile.text();
       setPreviewContent(text.substring(0, 500)); // First 500 characters
-    } catch (err) {
+    } catch {
       setError('Failed to read file content');
     }
   }, []);
@@ -137,7 +137,7 @@ Let me know if you'd like to discuss how I can contribute to your team!`;
           </div>
           <div className="ml-3 flex-1">
             <h3 className="text-sm font-medium text-yellow-800">
-              Don't have a resume ready?
+              Don&apos;t have a resume ready?
             </h3>
             <p className="mt-1 text-sm text-yellow-700">
               Use our sample resume template to get started quickly.
@@ -253,7 +253,7 @@ Let me know if you'd like to discuss how I can contribute to your team!`;
         <ul className="text-sm text-blue-700 list-disc list-inside space-y-1">
           <li>Use plain text format for maximum compatibility</li>
           <li>Include your contact information at the top</li>
-          <li>Keep it concise and relevant to the positions you're applying for</li>
+          <li>Keep it concise and relevant to the positions you&apos;re applying for</li>
           <li>Use clear section headers like EXPERIENCE, EDUCATION, SKILLS</li>
           <li>Avoid special characters that might not display correctly</li>
         </ul>

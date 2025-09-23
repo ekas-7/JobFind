@@ -19,10 +19,12 @@ export class ExcelProcessor {
       const headers = jsonData[0] as string[];
       
       // Rest of the rows contain data
-      const data: EmailData[] = jsonData.slice(1).map((row: any) => {
+      const data: EmailData[] = jsonData.slice(1).map((row: unknown) => {
         const rowData: EmailData = { email: '' };
+        const rowArray = Array.isArray(row) ? row : [];
         headers.forEach((header, index) => {
-          rowData[header] = row[index] || '';
+          const cellValue = rowArray[index];
+          rowData[header] = cellValue ? String(cellValue) : '';
         });
         return rowData;
       });

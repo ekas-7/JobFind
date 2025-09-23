@@ -1,6 +1,6 @@
 export interface EmailData {
   email: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean;
 }
 
 export interface ExcelSchema {

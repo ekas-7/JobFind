@@ -44,7 +44,7 @@ export default function EmailConfigForm({ onSubmit, onBack }: EmailConfigFormPro
         success: result.success,
         message: result.message
       });
-    } catch (error) {
+    } catch {
       setVerificationResult({
         success: false,
         message: 'Failed to verify Gmail connection'
