@@ -28,6 +28,7 @@ import EmailSender from './EmailSender';
 export default function JobFinderDashboard() {
   const [excelData, setExcelData] = useState<ExcelSchema | null>(null);
   const [selectedEmailColumn, setSelectedEmailColumn] = useState<string>('');
+  const [selectedCompanyColumn, setSelectedCompanyColumn] = useState<string>("none");
   const [emailConfig, setEmailConfig] = useState<EmailConfig>({
     email: '',
     password: '',
@@ -42,6 +43,7 @@ export default function JobFinderDashboard() {
     if (step <= 1) {
       setExcelData(null);
       setSelectedEmailColumn('');
+      setSelectedCompanyColumn('none');
     }
     if (step <= 2) {
       setEmailConfig({ email: '', password: '', subject: '', message: '' });
@@ -141,9 +143,10 @@ export default function JobFinderDashboard() {
               <CardContent className="p-6">
                 {currentStep === 1 && (
                   <ExcelUploader
-                    onSuccess={(data: ExcelSchema, emailColumn: string) => {
+                    onSuccess={(data: ExcelSchema, emailColumn: string, companyColumn?: string) => {
                       setExcelData(data);
                       setSelectedEmailColumn(emailColumn);
+                      setSelectedCompanyColumn(companyColumn || '');
                       setCurrentStep(2);
                     }}
                   />
@@ -173,6 +176,7 @@ export default function JobFinderDashboard() {
                   <EmailSender
                     excelData={excelData.data}
                     selectedEmailColumn={selectedEmailColumn}
+                    selectedCompanyColumn={selectedCompanyColumn}
                     emailConfig={emailConfig}
                     resumeFile={resumeFile}
                     onBack={() => resetToStep(3)}
@@ -197,6 +201,16 @@ export default function JobFinderDashboard() {
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Total Contacts</span>
                   <Badge variant="outline">{excelData?.data.length || 0}</Badge>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Company Personalization</span>
+                  {selectedCompanyColumn !== "none" ? (
+                    <Badge variant="secondary" className="bg-green-100 text-green-800 hover:bg-green-200">
+                      Enabled
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline">Disabled</Badge>
+                  )}
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Valid Emails</span>

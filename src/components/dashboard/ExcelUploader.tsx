@@ -19,7 +19,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 
 interface ExcelUploaderProps {
-  onSuccess: (data: ExcelSchema, emailColumn: string) => void;
+  onSuccess: (data: ExcelSchema, emailColumn: string, companyColumn?: string) => void;
 }
 
 export default function ExcelUploader({ onSuccess }: ExcelUploaderProps) {
@@ -28,6 +28,7 @@ export default function ExcelUploader({ onSuccess }: ExcelUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [excelData, setExcelData] = useState<ExcelSchema | null>(null);
   const [selectedEmailColumn, setSelectedEmailColumn] = useState<string>('');
+  const [selectedCompanyColumn, setSelectedCompanyColumn] = useState<string>("none");
   const [error, setError] = useState<string>('');
   const [uploadMethod, setUploadMethod] = useState<'excel' | 'urls'>('excel');
 
@@ -118,9 +119,11 @@ export default function ExcelUploader({ onSuccess }: ExcelUploaderProps) {
     }
   };
 
-  const handleEmailColumnSelect = () => {
+    const handleEmailColumnSelect = () => {
     if (excelData && selectedEmailColumn) {
-      onSuccess(excelData, selectedEmailColumn);
+      // Only pass the company column if it's not "none"
+      const companyColumn = selectedCompanyColumn === "none" ? undefined : selectedCompanyColumn;
+      onSuccess(excelData, selectedEmailColumn, companyColumn);
     }
   };
 
@@ -130,6 +133,17 @@ export default function ExcelUploader({ onSuccess }: ExcelUploaderProps) {
     const emailKeywords = ['email', 'mail', 'e-mail', 'e_mail', 'contact'];
     return excelData.headers.filter(header =>
       emailKeywords.some(keyword =>
+        header.toLowerCase().includes(keyword.toLowerCase())
+      )
+    );
+  };
+  
+  const getCompanyColumnSuggestions = () => {
+    if (!excelData) return [];
+    
+    const companyKeywords = ['company', 'organization', 'employer', 'business', 'firm', 'corp', 'inc'];
+    return excelData.headers.filter(header =>
+      companyKeywords.some(keyword =>
         header.toLowerCase().includes(keyword.toLowerCase())
       )
     );
@@ -327,6 +341,35 @@ export default function ExcelUploader({ onSuccess }: ExcelUploaderProps) {
               </Select>
             </CardContent>
           </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>Select Company Column (Optional)</CardTitle>
+              <CardDescription>Choose which column contains company names for personalization</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Select value={selectedCompanyColumn} onValueChange={setSelectedCompanyColumn}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose company column..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None (Skip company personalization)</SelectItem>
+                  {excelData.headers.map(header => (
+                    <SelectItem key={header} value={header}>
+                      {header}
+                      {getCompanyColumnSuggestions().includes(header) && (
+                        <Badge variant="secondary" className="ml-2 text-xs">recommended</Badge>
+                      )}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-gray-500 mt-2">
+                This allows you to use <code className="bg-gray-100 px-1 py-0.5 rounded">${"{company}"}</code> in your email template to personalize messages. 
+                If no company information is available for a contact, "your company" will be used as default.
+              </p>
+            </CardContent>
+          </Card>
 
           {/* Validation Results */}
           {validation && (
@@ -358,6 +401,11 @@ export default function ExcelUploader({ onSuccess }: ExcelUploaderProps) {
           {selectedEmailColumn && validation?.isValid && (
             <Button onClick={handleEmailColumnSelect} className="w-full" size="lg">
               Continue with {validation.validEmails} valid emails
+              {selectedCompanyColumn !== "none" && (
+                <span className="mx-1">
+                  (Company personalization enabled)
+                </span>
+              )}
               <CheckCircle className="w-5 h-5 ml-2" />
             </Button>
           )}

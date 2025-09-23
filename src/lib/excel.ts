@@ -79,6 +79,16 @@ export class ExcelProcessor {
       )
     );
   }
+  
+  static detectCompanyColumns(headers: string[]): string[] {
+    const companyKeywords = ['company', 'organization', 'employer', 'business', 'firm', 'corp', 'inc'];
+    
+    return headers.filter(header => 
+      companyKeywords.some(keyword => 
+        header.toLowerCase().includes(keyword.toLowerCase())
+      )
+    );
+  }
 
   static validateEmailColumn(data: EmailData[], emailColumn: string): {
     isValid: boolean;

@@ -26,6 +26,7 @@ import { EmailData } from '@/types';
 interface EmailSenderProps {
   excelData: EmailData[];
   selectedEmailColumn: string;
+  selectedCompanyColumn?: string;
   emailConfig: {
     email: string;
     password: string;
@@ -47,6 +48,7 @@ interface EmailResult {
 export default function EmailSender({
   excelData,
   selectedEmailColumn,
+  selectedCompanyColumn,
   emailConfig,
   resumeFile,
   onBack,
@@ -102,6 +104,11 @@ export default function EmailSender({
       }
 
       try {
+        // Get company name if available
+        const company = (selectedCompanyColumn && selectedCompanyColumn !== "none" && row[selectedCompanyColumn]) 
+          ? String(row[selectedCompanyColumn]).trim() 
+          : 'your company'; // Default to "your company" if no value is present
+          
         // Create FormData for the API call
         const formData = new FormData();
         formData.append('to', String(email));
@@ -110,6 +117,7 @@ export default function EmailSender({
         formData.append('senderEmail', emailConfig.email);
         formData.append('senderPassword', emailConfig.password);
         formData.append('resume', resumeFile);
+        formData.append('company', company); // Always send a company value
 
         const response = await fetch('/api/send-email', {
           method: 'POST',

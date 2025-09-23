@@ -56,7 +56,7 @@ export default function EmailConfigForm({ onSubmit, onBack }: EmailConfigFormPro
       subject: 'Application for {position} - {your_name}',
       body: `Dear Hiring Manager,
 
-I hope this email finds you well. I am writing to express my strong interest in the {position} role at {company}.
+I hope this email finds you well. I am writing to express my strong interest in the {position} role at \${company}.
 
 After researching your company and the position requirements, I believe my background in {your_field} makes me an excellent candidate for this opportunity.
 
@@ -65,7 +65,7 @@ Key highlights of my experience include:
 • {highlight_2}
 • {highlight_3}
 
-I have attached my resume for your review and would welcome the opportunity to discuss how my skills and enthusiasm can contribute to {company}'s continued success.
+I have attached my resume for your review and would welcome the opportunity to discuss how my skills and enthusiasm can contribute to \${company}'s continued success.
 
 Thank you for your time and consideration. I look forward to hearing from you.
 
@@ -81,14 +81,14 @@ Best regards,
 
 I hope you're doing well. I'm {your_name}, a {your_title} with experience in {your_field}.
 
-I've been following {company}'s work and am impressed by {specific_company_detail}. I'm currently exploring new opportunities and would love to learn more about your team and any potential openings that might align with my background.
+I've been following \${company}'s work and am impressed by {specific_company_detail}. I'm currently exploring new opportunities and would love to learn more about your team and any potential openings that might align with my background.
 
 A bit about me:
 • {experience_years} years of experience in {your_field}
 • Expertise in {skill_1}, {skill_2}, and {skill_3}
 • Passionate about {relevant_interest}
 
-I've attached my resume and would greatly appreciate any insights you might have about opportunities at {company} or the industry in general.
+I've attached my resume and would greatly appreciate any insights you might have about opportunities at \${company} or the industry in general.
 
 Thank you for your time, and I look forward to potentially connecting.
 
@@ -102,14 +102,14 @@ Best regards,
 
 I hope this message finds you well. My name is {your_name}, and I'm a {your_title} with a passion for {relevant_field}.
 
-I came across {company} while researching innovative companies in {industry}, and I'm truly impressed by {specific_achievement_or_value}.
+I came across \${company} while researching innovative companies in {industry}, and I'm truly impressed by {specific_achievement_or_value}.
 
 I'm currently seeking new opportunities where I can contribute my skills in:
 • {core_skill_1}
 • {core_skill_2}
 • {core_skill_3}
 
-While I know you may not have any current openings, I'd love to introduce myself and learn more about {company}'s future plans. Sometimes the best opportunities come from building relationships before positions are posted.
+While I know you may not have any current openings, I'd love to introduce myself and learn more about \${company}'s future plans. Sometimes the best opportunities come from building relationships before positions are posted.
 
 I've attached my resume for your reference. Would you be open to a brief 15-minute call to discuss potential synergies?
 
@@ -331,7 +331,7 @@ Warm regards,
                 required
               />
               <p className="text-xs text-gray-500 mt-1">
-                Use placeholders like {'{position}'}, {'{company}'}, {'{your_name}'} for personalization
+                Use placeholders like <code className="bg-gray-100 px-1 py-0.5 rounded">${"{company}"}</code>, {'{position}'}, {'{your_name}'} for personalization
               </p>
             </div>
 
@@ -362,7 +362,7 @@ Warm regards,
                 required
               />
               <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>Use placeholders for personalization: {'{company}'}, {'{position}'}, {'{your_name}'}</span>
+                <span>Use placeholders: <code className="bg-gray-100 px-1 py-0.5 rounded">${"{company}"}</code>, {'{position}'}, {'{your_name}'}</span>
                 <span>{config.message.length} characters</span>
               </div>
             </div>

@@ -8,10 +8,11 @@ export async function POST(request: NextRequest) {
     // Get form data
     const to = formData.get('to') as string;
     const subject = formData.get('subject') as string;
-    const message = formData.get('message') as string;
+    let message = formData.get('message') as string;
     const senderEmail = formData.get('senderEmail') as string;
     const senderPassword = formData.get('senderPassword') as string;
     const resumeFile = formData.get('resume') as File;
+    const company = formData.get('company') as string;
 
     // Validate required fields
     if (!to || !subject || !message || !resumeFile) {
@@ -64,6 +65,10 @@ export async function POST(request: NextRequest) {
       ? 'application/pdf' 
       : 'text/plain';
 
+    // Replace placeholders in the message
+    const companyValue = company ? company.trim() : "your company";
+    message = message.replace(/\${company}/g, companyValue);
+    
     // Send email
     try {
       await transporter.sendMail({
