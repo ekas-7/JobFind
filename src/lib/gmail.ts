@@ -35,7 +35,7 @@ export class GmailService {
         from: process.env.GMAIL_USER,
         to: to,
         subject: emailConfig.subject,
-        text: emailConfig.body,
+        text: emailConfig.message,
         attachments: resume ? [{
           filename: resumeFilename || 'resume.txt',
           content: resume,

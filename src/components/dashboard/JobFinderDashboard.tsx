@@ -29,9 +29,10 @@ export default function JobFinderDashboard() {
   const [excelData, setExcelData] = useState<ExcelSchema | null>(null);
   const [selectedEmailColumn, setSelectedEmailColumn] = useState<string>('');
   const [emailConfig, setEmailConfig] = useState<EmailConfig>({
-    from: '',
+    email: '',
+    password: '',
     subject: '',
-    body: ''
+    message: ''
   });
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -43,7 +44,7 @@ export default function JobFinderDashboard() {
       setSelectedEmailColumn('');
     }
     if (step <= 2) {
-      setEmailConfig({ from: '', subject: '', body: '' });
+      setEmailConfig({ email: '', password: '', subject: '', message: '' });
     }
     if (step <= 3) {
       setResumeFile(null);

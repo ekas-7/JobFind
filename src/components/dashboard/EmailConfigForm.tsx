@@ -28,9 +28,10 @@ interface EmailConfigFormProps {
 
 export default function EmailConfigForm({ onSubmit, onBack }: EmailConfigFormProps) {
   const [config, setConfig] = useState<EmailConfig>({
-    from: '',
+    email: '',
+    password: '',
     subject: '',
-    body: ''
+    message: ''
   });
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationResult, setVerificationResult] = useState<{
@@ -53,7 +54,7 @@ export default function EmailConfigForm({ onSubmit, onBack }: EmailConfigFormPro
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ from: config.from }),
+        body: JSON.stringify({ email: config.email }),
       });
 
       const result = await response.json();
@@ -80,12 +81,10 @@ export default function EmailConfigForm({ onSubmit, onBack }: EmailConfigFormPro
   };
 
   const isFormValid = () => {
-    return config.from.trim() !== '' && 
-           config.subject.trim() !== '' && 
-           config.body.trim() !== '';
-  };
-
-  const emailTemplates = [
+    return config.email.trim() !== '' &&
+           config.subject.trim() !== '' &&
+           config.message.trim() !== '';
+  };  const emailTemplates = [
     {
       name: 'Job Application',
       subject: 'Application for {position} - {your_name}',
@@ -160,7 +159,7 @@ Warm regards,
     setConfig(prev => ({
       ...prev,
       subject: template.subject,
-      body: template.body
+      message: template.body
     }));
   };
 
@@ -210,7 +209,7 @@ Warm regards,
                 </li>
                 <li className="flex items-start">
                   <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">2</span>
-                  <span>Under "Signing in to Google", click <strong>2-Step Verification</strong> and enable it</span>
+                  <span>Under &ldquo;Signing in to Google&rdquo;, click <strong>2-Step Verification</strong> and enable it</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">3</span>
@@ -233,11 +232,11 @@ Warm regards,
                 </li>
                 <li className="flex items-start">
                   <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">2</span>
-                  <span>Under "Select app", choose <strong>Mail</strong></span>
+                  <span>Under &ldquo;Select app&rdquo;, choose <strong>Mail</strong></span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">3</span>
-                  <span>Under "Select device", choose <strong>Other (Custom name)</strong> and type "NodeMailerApp"</span>
+                  <span>Under &ldquo;Select device&rdquo;, choose <strong>Other (Custom name)</strong> and type &ldquo;NodeMailerApp&rdquo;</span>
                 </li>
                 <li className="flex items-start">
                   <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">4</span>
@@ -245,7 +244,7 @@ Warm regards,
                 </li>
                 <li className="flex items-start">
                   <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">5</span>
-                  <span>Copy the 16-character password and use it in the "App Password" field below</span>
+                  <span>Copy the 16-character password and use it in the &ldquo;App Password&rdquo; field below</span>
                 </li>
               </ol>
             </div>
@@ -281,15 +280,15 @@ Warm regards,
               </label>
               <Input
                 type="email"
-                id="from"
-                value={config.from}
-                onChange={(e) => handleInputChange('from', e.target.value)}
+                id="email"
+                value={config.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
                 placeholder="your.email@gmail.com"
                 required
               />
             </div>
 
-            {config.from && (
+            {config.email && (
               <div className="flex items-center space-x-3">
                 <Button
                   type="button"
@@ -383,15 +382,15 @@ Warm regards,
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor="body" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
                   Email Body
                 </label>
-                {config.body && (
+                {config.message && (
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    onClick={() => copyToClipboard(config.body)}
+                    onClick={() => copyToClipboard(config.message)}
                   >
                     <Copy className="w-4 h-4 mr-2" />
                     Copy
@@ -399,9 +398,9 @@ Warm regards,
                 )}
               </div>
               <Textarea
-                id="body"
-                value={config.body}
-                onChange={(e) => handleInputChange('body', e.target.value)}
+                id="message"
+                value={config.message}
+                onChange={(e) => handleInputChange('message', e.target.value)}
                 placeholder="Compose your email message here..."
                 rows={12}
                 className="min-h-[300px]"
@@ -409,7 +408,7 @@ Warm regards,
               />
               <div className="flex justify-between text-xs text-gray-500 mt-1">
                 <span>Use placeholders for personalization: {'{company}'}, {'{position}'}, {'{your_name}'}</span>
-                <span>{config.body.length} characters</span>
+                <span>{config.message.length} characters</span>
               </div>
             </div>
           </CardContent>

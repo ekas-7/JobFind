@@ -9,9 +9,10 @@ export interface ExcelSchema {
 }
 
 export interface EmailConfig {
-  from: string;
+  email: string;
+  password: string;
   subject: string;
-  body: string;
+  message: string;
 }
 
 export interface UploadResponse {
