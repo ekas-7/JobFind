@@ -104,11 +104,25 @@ export default function EmailSender({
       try {
         // Create FormData for the API call
         const formData = new FormData();
-        formData.append('to', String(email));
-        formData.append('subject', emailConfig.subject);
-        formData.append('message', emailConfig.message);
-        formData.append('senderEmail', emailConfig.email);
-        formData.append('senderPassword', emailConfig.password);
+        
+        // Format data for current email according to ExcelSchema
+        const currentRow = validEmails[i];
+        const excelData = {
+          headers: Object.keys(currentRow),
+          data: [currentRow]
+        };
+        
+        // Prepare email config
+        const emailConfigData = {
+          email: emailConfig.email,
+          password: emailConfig.password,
+          subject: emailConfig.subject,
+          message: emailConfig.message
+        };
+        
+        formData.append('excelData', JSON.stringify(excelData));
+        formData.append('emailColumn', selectedEmailColumn);
+        formData.append('emailConfig', JSON.stringify(emailConfigData));
         formData.append('resume', resumeFile);
 
         const response = await fetch('/api/send-emails', {
