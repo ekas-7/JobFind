@@ -21,8 +21,10 @@ import {
   Zap
 } from 'lucide-react';
 
+import { EmailData } from '@/types';
+
 interface EmailSenderProps {
-  excelData: any[];
+  excelData: EmailData[];
   selectedEmailColumn: string;
   emailConfig: {
     email: string;
@@ -64,7 +66,7 @@ export default function EmailSender({
 
   const validEmails = excelData.filter(row => {
     const email = row[selectedEmailColumn];
-    return email && email.includes('@') && email.includes('.');
+    return email && typeof email === 'string' && email.includes('@') && email.includes('.');
   });
 
   const startSending = async () => {
@@ -74,7 +76,7 @@ export default function EmailSender({
     setStats({ sent: 0, failed: 0, total });
     
     const results: EmailResult[] = validEmails.map(row => ({
-      email: row[selectedEmailColumn],
+      email: String(row[selectedEmailColumn]),
       status: 'pending' as const
     }));
     
@@ -82,7 +84,7 @@ export default function EmailSender({
 
     for (let i = 0; i < validEmails.length; i++) {
       const row = validEmails[i];
-      const email = row[selectedEmailColumn];
+      const email = String(row[selectedEmailColumn]);
       setCurrentEmailIndex(i);
       
       // Update progress
@@ -102,7 +104,7 @@ export default function EmailSender({
       try {
         // Create FormData for the API call
         const formData = new FormData();
-        formData.append('to', email);
+        formData.append('to', String(email));
         formData.append('subject', emailConfig.subject);
         formData.append('message', emailConfig.message);
         formData.append('senderEmail', emailConfig.email);

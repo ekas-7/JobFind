@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ModeToggle } from '@/components/mode-toggle';
 import { 
   Mail, 
   ArrowLeft, 
@@ -57,9 +58,9 @@ export default function JobFinderDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <header className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-4">
@@ -74,13 +75,14 @@ export default function JobFinderDashboard() {
                   <Mail className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">JobFind Pro</h1>
-                  <p className="text-sm text-gray-500">Email Campaign Dashboard</p>
+                  <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">JobFind Pro</h1>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Email Campaign Dashboard</p>
                 </div>
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+              <ModeToggle />
+              <Badge variant="outline" className="bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                 Online
               </Badge>
@@ -168,12 +170,12 @@ export default function JobFinderDashboard() {
 
                 {currentStep === 4 && excelData && resumeFile && (
                   <EmailSender
-                    excelData={excelData}
-                    emailColumn={selectedEmailColumn}
+                    excelData={excelData.data}
+                    selectedEmailColumn={selectedEmailColumn}
                     emailConfig={emailConfig}
                     resumeFile={resumeFile}
                     onBack={() => resetToStep(3)}
-                    onComplete={() => resetToStep(1)}
+                    onReset={() => resetToStep(1)}
                   />
                 )}
               </CardContent>

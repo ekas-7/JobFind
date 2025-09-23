@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { ModeToggle } from '@/components/mode-toggle';
 import { 
   Mail, 
   Upload, 
@@ -22,31 +23,32 @@ import {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       {/* Header */}
-      <header className="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <Mail className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
                 JobFind Pro
               </span>
             </div>
             <nav className="hidden md:flex items-center space-x-6">
-              <Link href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#features" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors">
                 Features
               </Link>
-              <Link href="#pricing" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#pricing" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors">
                 Pricing
               </Link>
-              <Link href="#docs" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <Link href="#docs" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors">
                 Docs
               </Link>
+              <ModeToggle />
               <Link href="/dashboard">
-                <Button className="bg-black hover:bg-gray-800 text-white">
+                <Button className="bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black">
                   Get Started
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -60,12 +62,12 @@ export default function LandingPage() {
       <section className="relative py-20 sm:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <Badge variant="outline" className="mb-6 px-3 py-1">
+            <Badge variant="outline" className="mb-6 px-3 py-1 border-gray-300 dark:border-gray-700">
               <Zap className="w-3 h-3 mr-1" />
               AI-Powered Job Applications
             </Badge>
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-gray-100 dark:via-gray-200 dark:to-gray-100 bg-clip-text text-transparent">
                 Find Your Dream Job
               </span>
               <br />
@@ -73,18 +75,18 @@ export default function LandingPage() {
                 Through Cold Email
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
               Upload your contact list, customize your message, attach your resume, and let our platform handle the rest. 
               Send personalized job applications at scale with intelligent automation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link href="/dashboard">
-                <Button size="lg" className="bg-black hover:bg-gray-800 text-white px-8 py-3 text-lg">
+                <Button size="lg" className="bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black px-8 py-3 text-lg">
                   Start Applying Now
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="px-8 py-3 text-lg">
+              <Button size="lg" variant="outline" className="px-8 py-3 text-lg border-gray-300 dark:border-gray-700">
                 <Github className="w-5 h-5 mr-2" />
                 View on GitHub
               </Button>
@@ -93,8 +95,8 @@ export default function LandingPage() {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">10k+</div>
-                <div className="text-sm text-gray-600">Emails Sent</div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">10k+</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Emails Sent</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-gray-900">95%</div>
