@@ -65,16 +65,17 @@ export async function POST(request: NextRequest) {
       ? 'application/pdf' 
       : 'text/plain';
 
-    // Replace placeholders in the message
+    // Replace placeholders in the message and subject
     const companyValue = company ? company.trim() : "your company";
     message = message.replace(/\${company}/g, companyValue);
+    let processedSubject = subject.replace(/\${company}/g, companyValue);
     
     // Send email
     try {
       await transporter.sendMail({
         from: user,
         to: to,
-        subject: subject,
+        subject: processedSubject,
         text: message,
         attachments: [{
           filename: resumeFile.name,
