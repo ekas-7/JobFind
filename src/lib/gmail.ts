@@ -71,19 +71,20 @@ export class GmailService {
 
     for (const recipient of recipients) {
       const email = recipient[emailColumn];
-      if (!email || !this.isValidEmail(email)) {
+      const emailString = email ? String(email) : '';
+      if (!emailString || !this.isValidEmail(emailString)) {
         failed++;
-        errors.push(`Invalid email: ${email}`);
+        errors.push(`Invalid email: ${emailString}`);
         continue;
       }
 
-      const result = await this.sendEmail(email, emailConfig, resume, resumeFilename);
+      const result = await this.sendEmail(emailString, emailConfig, resume, resumeFilename);
       
       if (result.success) {
         sent++;
       } else {
         failed++;
-        errors.push(`Failed to send to ${email}: ${result.error}`);
+        errors.push(`Failed to send to ${emailString}: ${result.error}`);
       }
 
       // Add delay to avoid rate limiting
