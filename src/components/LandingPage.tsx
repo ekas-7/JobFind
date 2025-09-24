@@ -86,10 +86,12 @@ export default function LandingPage() {
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="px-8 py-3 text-lg border-gray-300 dark:border-gray-700">
-                <Github className="w-5 h-5 mr-2" />
-                View on GitHub
-              </Button>
+              <a href="https://github.com/ekas-7/JobFind" target="_blank" rel="noopener noreferrer" aria-label="View JobFind Pro on GitHub">
+                <Button size="lg" variant="outline" className="px-8 py-3 text-lg border-gray-300 dark:border-gray-700">
+                  <Github className="w-5 h-5 mr-2" />
+                  View on GitHub
+                </Button>
+              </a>
             </div>
             
             {/* Stats */}
@@ -362,12 +364,16 @@ export default function LandingPage() {
             <div>
               <h3 className="font-semibold text-gray-900 mb-3">Connect</h3>
               <div className="flex space-x-4">
-                <Button variant="outline" size="sm">
-                  <Twitter className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Github className="w-4 h-4" />
-                </Button>
+                <a href="https://x.com/ekas-7" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                  <Button variant="outline" size="sm">
+                    <Twitter className="w-4 h-4" />
+                  </Button>
+                </a>
+                <a href="https://github.com/ekas-7/JobFind" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                  <Button variant="outline" size="sm">
+                    <Github className="w-4 h-4" />
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
