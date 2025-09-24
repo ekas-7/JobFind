@@ -115,8 +115,45 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Video Demo Section */}
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-950">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4">
+              <Zap className="w-3 h-3 mr-1" />
+              Watch How It Works
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+              See JobFind Pro in Action
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
+              Learn how to set up and send your first job application campaign in just 3 minutes.
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-2xl">
+              <iframe 
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/b_zTWBS59EE" 
+                title="JobFind Pro Demo"
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen>
+              </iframe>
+            </div>
+            
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-2">3-Minute Setup</Badge>
+              <Badge className="bg-green-100 text-green-700 hover:bg-green-200 px-4 py-2">100+ Applications/Day</Badge>
+              <Badge className="bg-purple-100 text-purple-700 hover:bg-purple-200 px-4 py-2">Step-by-Step Tutorial</Badge>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50/50">
+      <section id="features" className="py-20 bg-gray-50/50 dark:bg-gray-900/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4">
